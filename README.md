@@ -34,7 +34,7 @@ This repository contains battle-tested scripts, configurations, and documentatio
 ### 1. Clone and Setup
 
 ```bash
-git clone https://github.com/IanLGit/PortableMT5Dev.git
+git clone https://github.com/IanIT/PortableMT5Dev.git
 cd portable-mt5-dev-environment
 ```
 
@@ -259,8 +259,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 - **Documentation**: Check the [documentation](documentation/) directory
-- **Issues**: Report bugs and request features via [GitHub Issues](https://github.com/IanLGit/PortableMT5Dev/issues)
-- **Discussions**: Join the conversation in [GitHub Discussions](https://github.com/IanLGit/PortableMT5Dev/discussions)
+- **Issues**: Report bugs and request features via [GitHub Issues](https://github.com/IanIT/PortableMT5Dev/issues)
+- **Discussions**: Join the conversation in [GitHub Discussions](https://github.com/IanIT/PortableMT5Dev/discussions)
 
 ---
 

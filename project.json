@@ -7,7 +7,7 @@
     "keywords": ["metatrader", "mt5", "mql5", "trading", "portable", "development", "vscode"],
     "repository": {
         "type": "git",
-        "url": "https://github.com/IanLGit/PortableMT5Dev.git"
+        "url": "https://github.com/IanIT/PortableMT5Dev.git"
     },
     "requirements": {
         "os": "Windows 10/11",

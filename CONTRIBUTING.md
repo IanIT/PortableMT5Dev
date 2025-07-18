@@ -186,7 +186,7 @@ Before contributing, ensure you have:
    //| Script/EA/Indicator Name                                         |
    //+------------------------------------------------------------------+
    #property copyright "Your Name"
-   #property link      "https://github.com/IanLGit/PortableMT5Dev"
+   #property link      "https://github.com/IanIT/PortableMT5Dev"
    #property version   "1.00"
    #property strict
 

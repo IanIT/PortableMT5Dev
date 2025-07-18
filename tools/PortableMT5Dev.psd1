@@ -87,7 +87,7 @@
             LicenseUri = 'https://opensource.org/licenses/MIT'
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/IanLGit/PortableMT5Dev'
+            ProjectUri = 'https://github.com/IanIT/PortableMT5Dev'
 
             # A URL to an icon representing this module.
             IconUri = ''

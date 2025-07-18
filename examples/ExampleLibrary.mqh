@@ -2,7 +2,7 @@
 //| Example Library for Portable MT5 Development Environment        |
 //+------------------------------------------------------------------+
 #property copyright "Portable MT5 Development Environment"
-#property link      "https://github.com/IanLGit/PortableMT5Dev"
+#property link      "https://github.com/IanIT/PortableMT5Dev"
 #property version   "1.00"
 #property strict
 
