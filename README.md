@@ -35,7 +35,7 @@ This repository contains battle-tested scripts, configurations, and documentatio
 
 ```bash
 git clone https://github.com/IanIT/PortableMT5Dev.git
-cd portable-mt5-dev-environment
+cd PortableMT5Dev
 ```
 
 ### 2. Run Initial Setup
@@ -69,7 +69,7 @@ code .
 ## 📁 Repository Structure
 
 ```
-portable-mt5-dev-environment/
+PortableMT5Dev/
 ├── 📁 setup/              # Initial setup scripts
 ├── 📁 tools/              # PowerShell automation tools
 ├── 📁 templates/          # Project templates
