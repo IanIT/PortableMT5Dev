@@ -1,0 +1,44 @@
+{
+    "statusBarButtons": [
+        {
+            "text": "$(play) Build MQL5",
+            "tooltip": "Compile current MQL5 file",
+            "command": "workbench.action.tasks.runTask",
+            "arguments": ["Build MQL5"],
+            "priority": 1000,
+            "alignment": "left"
+        },
+        {
+            "text": "$(link) Sync Links",
+            "tooltip": "Create/update symbolic links",
+            "command": "workbench.action.terminal.new",
+            "arguments": ["powershell", "-Command", "& .\\tools\\Create-FileSymlinks.ps1"],
+            "priority": 900,
+            "alignment": "left"
+        },
+        {
+            "text": "$(beaker) Run Tests",
+            "tooltip": "Run development environment tests",
+            "command": "workbench.action.tasks.runTask",
+            "arguments": ["Run Tests"],
+            "priority": 800,
+            "alignment": "left"
+        },
+        {
+            "text": "$(terminal) MT5 Terminal",
+            "tooltip": "Launch MetaTrader 5 Terminal",
+            "command": "workbench.action.terminal.new",
+            "arguments": ["powershell", "-Command", "Start-Process 'C:\\MetaTrader 5\\terminal64.exe'"],
+            "priority": 700,
+            "alignment": "left"
+        },
+        {
+            "text": "$(edit) MetaEditor",
+            "tooltip": "Launch MetaEditor",
+            "command": "workbench.action.terminal.new",
+            "arguments": ["powershell", "-Command", "Start-Process 'C:\\MetaTrader 5\\MetaEditor64.exe'"],
+            "priority": 600,
+            "alignment": "left"
+        }
+    ]
+}

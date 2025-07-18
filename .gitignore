@@ -1,0 +1,65 @@
+# Compiled files
+*.ex5
+*.ex4
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# MetaTrader 5 specific
+MQL5/Logs/
+MQL5/Tester/
+MQL5/Profiles/
+MQL5/Files/
+
+# VS Code specific
+.vscode/settings.json.bak
+.vscode/launch.json.bak
+
+# Windows specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# PowerShell specific
+*.ps1xml
+
+# Backup files
+*.bak
+*.backup
+backup/
+logs/
+
+# Environment specific
+.env
+.env.local
+.env.*.local
+
+# Personal configuration
+config/personal.json
+config/local.json
+
+# Build outputs
+build/
+dist/
+out/
+
+# Package files
+*.zip
+*.7z
+*.rar
+
+# IDE files
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes

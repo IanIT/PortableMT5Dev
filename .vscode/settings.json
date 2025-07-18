@@ -1,0 +1,167 @@
+{
+    // Editor settings
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.renderWhitespace": "boundary",
+    "editor.rulers": [80, 120],
+    "editor.wordWrap": "on",
+    "editor.minimap.enabled": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+
+    // File associations for MQL5/MQL4
+    "files.associations": {
+        "*.mq5": "cpp",
+        "*.mqh": "cpp",
+        "*.mq4": "cpp",
+        "*.mt5": "cpp",
+        "*.mt4": "cpp",
+        "*.ex5": "binary",
+        "*.ex4": "binary"
+    },
+
+    // Terminal settings
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell",
+            "args": ["-NoLogo"]
+        },
+        "Command Prompt": {
+            "path": "cmd.exe",
+            "icon": "terminal-cmd"
+        }
+    },
+
+    // PowerShell specific settings
+    "powershell.codeFormatting.preset": "OTBS",
+    "powershell.codeFormatting.openBraceOnSameLine": true,
+    "powershell.codeFormatting.newLineAfterOpenBrace": true,
+    "powershell.codeFormatting.newLineAfterCloseBrace": true,
+    "powershell.codeFormatting.whitespaceBeforeOpenBrace": true,
+    "powershell.codeFormatting.whitespaceBeforeOpenParen": true,
+    "powershell.codeFormatting.whitespaceAroundOperator": true,
+    "powershell.codeFormatting.whitespaceAfterSeparator": true,
+    "powershell.codeFormatting.ignoreOneLineBlock": true,
+    "powershell.integratedConsole.showOnStartup": false,
+    "powershell.scriptAnalysis.enable": true,
+    "powershell.scriptAnalysis.settingsPath": "PSScriptAnalyzerSettings.psd1",
+
+    // Search settings
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/*.ex5": true,
+        "**/*.ex4": true,
+        "**/logs": true,
+        "**/backup": true,
+        "**/.git": true
+    },
+
+    // File watching
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/logs/**": true,
+        "**/backup/**": true,
+        "**/*.ex5": true,
+        "**/*.ex4": true
+    },
+
+    // Language specific settings
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+
+    "[powershell]": {
+        "editor.defaultFormatter": "ms-vscode.powershell",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2
+    },
+
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2
+    },
+
+    "[markdown]": {
+        "editor.defaultFormatter": "vscode.markdown-language-features",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2,
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "comments": "off",
+            "strings": "off",
+            "other": "off"
+        }
+    },
+
+    // Explorer settings
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.sortOrder": "type",
+
+    // Git settings
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "git.postCommitCommand": "none",
+
+    // Workbench settings
+    "workbench.startupEditor": "readme",
+    "workbench.colorTheme": "Default Dark+",
+    "workbench.iconTheme": "vs-seti",
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+
+    // Problem matching
+    "problemMatcher": {
+        "mql5": {
+            "pattern": [
+                {
+                    "regexp": "^(.*)\\((\\d+),(\\d+)\\):\\s+(warning|error)\\s+(\\d+):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "code": 5,
+                    "message": 6
+                }
+            ],
+            "background": {
+                "activeOnStart": false,
+                "beginsPattern": "^.*compilation started.*$",
+                "endsPattern": "^.*compilation (finished|failed).*$"
+            }
+        }
+    },
+
+    // Extensions settings
+    "extensions.ignoreRecommendations": false,
+    "extensions.showRecommendationsOnlyOnDemand": false,
+
+    // Security settings
+    "security.workspace.trust.untrustedFiles": "open",
+    "security.workspace.trust.enabled": true,
+
+    // Custom settings for this workspace
+    "portableMT5Dev.mt5Path": "C:\\MetaTrader 5",
+    "portableMT5Dev.autoCompileOnSave": false,
+    "portableMT5Dev.createBackupsOnCompile": true,
+    "portableMT5Dev.symlinkPrefix": "DEV_",
+    "portableMT5Dev.logLevel": "INFO"
+}

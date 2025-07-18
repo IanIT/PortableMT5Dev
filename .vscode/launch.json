@@ -1,0 +1,61 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "PowerShell: Launch Current File",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${file}",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "PowerShell: Launch Setup Script",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/setup/Setup-Environment.ps1",
+            "args": ["-DryRun"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "PowerShell: Launch Initialize Script",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/setup/Initialize-Environment.ps1",
+            "args": ["-ProjectName", "TestProject", "-SkipValidation"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "PowerShell: Launch Build Script",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/tools/Build-MQL5.ps1",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "PowerShell: Launch Test Script",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/tests/Run-Tests.ps1",
+            "args": ["-TestType", "all", "-Verbose"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "PowerShell: Launch Symlink Script",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/tools/Create-FileSymlinks.ps1",
+            "args": ["-DryRun"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "PowerShell: Interactive Session",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "",
+            "args": ["-NoExit", "-Command", "Import-Module '.\\tools\\PortableMT5Dev.psm1'; Write-Host 'Portable MT5 Development Environment Module loaded' -ForegroundColor Green"],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

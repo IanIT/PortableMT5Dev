@@ -1,0 +1,112 @@
+{
+    "folders": [
+        {
+            "name": "PortableMT5Dev",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "actionButtons": {
+            "defaultColor": "#007acc",
+            "loadNpmCommands": false,
+            "reloadButton": "🔄",
+            "commands": [
+                {
+                    "cwd": "${workspaceFolder}",
+                    "name": "🔨 Build MQL5",
+                    "color": "green",
+                    "singleInstance": true,
+                    "command": "powershell.exe -ExecutionPolicy Bypass -File tools/Build-MQL5.ps1"
+                },
+                {
+                    "cwd": "${workspaceFolder}",
+                    "name": "⚙️ Setup Environment",
+                    "color": "blue",
+                    "singleInstance": true,
+                    "command": "powershell.exe -ExecutionPolicy Bypass -File setup/Setup-Environment.ps1 -CreateSymlinks -SetupVSCode"
+                },
+                {
+                    "cwd": "${workspaceFolder}",
+                    "name": "🧪 Run Tests",
+                    "color": "orange",
+                    "singleInstance": true,
+                    "command": "powershell.exe -ExecutionPolicy Bypass -File tests/Run-Tests.ps1 -TestType all"
+                }
+            ]
+        },
+        "files.encoding": "utf8",
+        "files.autoGuessEncoding": true,
+        "powershell.codeFormatting.preset": "OTBS",
+        "powershell.scriptAnalysis.enable": true
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "Build MQL5",
+                "type": "shell",
+                "command": "powershell.exe",
+                "args": [
+                    "-ExecutionPolicy", "Bypass",
+                    "-File", "tools/Build-MQL5.ps1"
+                ],
+                "group": {
+                    "kind": "build",
+                    "isDefault": true
+                },
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                },
+                "problemMatcher": []
+            },
+            {
+                "label": "Setup Environment",
+                "type": "shell",
+                "command": "powershell.exe",
+                "args": [
+                    "-ExecutionPolicy", "Bypass",
+                    "-File", "setup/Setup-Environment.ps1",
+                    "-CreateSymlinks",
+                    "-SetupVSCode"
+                ],
+                "group": "build",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                },
+                "problemMatcher": []
+            },
+            {
+                "label": "Run Tests",
+                "type": "shell",
+                "command": "powershell.exe",
+                "args": [
+                    "-ExecutionPolicy", "Bypass",
+                    "-File", "tests/Run-Tests.ps1",
+                    "-TestType", "all"
+                ],
+                "group": "test",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                },
+                "problemMatcher": []
+            }
+        ]
+    },
+    "extensions": {
+        "recommendations": [
+            "seunlanlege.action-buttons",
+            "ms-vscode.powershell",
+            "yzhang.markdown-all-in-one",
+            "davidanson.vscode-markdownlint"
+        ]
+    }
+}

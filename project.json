@@ -1,0 +1,75 @@
+{
+    "name": "Portable MT5 Development Environment",
+    "version": "1.0.0",
+    "description": "A comprehensive template and toolkit for setting up a professional, portable MetaTrader 5 development environment",
+    "author": "Portable MT5 Development Environment",
+    "license": "MIT",
+    "keywords": ["metatrader", "mt5", "mql5", "trading", "portable", "development", "vscode"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/your-username/portable-mt5-dev-environment.git"
+    },
+    "requirements": {
+        "os": "Windows 10/11",
+        "powershell": "5.1+",
+        "vscode": "latest",
+        "mt5": "any"
+    },
+    "configuration": {
+        "defaultPaths": {
+            "mt5": "C:\\MetaTrader 5",
+            "workspace": ".",
+            "builds": "builds",
+            "logs": "logs"
+        },
+        "compilation": {
+            "usePortableFlag": true,
+            "autoDetectMT5": true,
+            "createBackups": true,
+            "verboseOutput": false
+        },
+        "symlinks": {
+            "useFileLevelLinks": true,
+            "preventConflicts": true,
+            "prefix": "SPSEA_",
+            "validateTargets": true
+        },
+        "testing": {
+            "runOnBuild": false,
+            "validateEnvironment": true,
+            "generateReports": true
+        }
+    },
+    "scripts": {
+        "init": "setup\\Initialize-Environment.ps1",
+        "setup": "setup\\Setup-Environment.ps1",
+        "build": "tools\\Build-MQL5.ps1",
+        "test": "tests\\Run-Tests.ps1",
+        "symlink": "tools\\Create-FileSymlinks.ps1"
+    },
+    "vscode": {
+        "extensions": [
+            "ms-vscode.powershell",
+            "alefragnani.project-manager",
+            "ms-vscode.vscode-json",
+            "redhat.vscode-yaml",
+            "github.vscode-github-actions"
+        ],
+        "settings": {
+            "terminal.integrated.defaultProfile.windows": "PowerShell",
+            "powershell.execution.policy": "RemoteSigned",
+            "files.associations": {
+                "*.mq5": "cpp",
+                "*.mqh": "cpp",
+                "*.mq4": "cpp",
+                "*.mt5": "cpp"
+            }
+        }
+    },
+    "documentation": {
+        "mainGuide": "documentation\\SETUP_GUIDE.md",
+        "compilation": "documentation\\COMPILATION_GUIDE.md",
+        "troubleshooting": "documentation\\TROUBLESHOOTING_GUIDE.md",
+        "contributing": "CONTRIBUTING.md"
+    }
+}

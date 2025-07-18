@@ -1,0 +1,23 @@
+{
+    "actionButtons": {
+        "defaultColor": "#007acc",
+        "loadNpmCommands": false,
+        "reloadButton": "🔄",
+        "commands": [
+            {
+                "cwd": "${workspaceFolder}",
+                "name": "🔨 Build MQL5",
+                "color": "green",
+                "singleInstance": true,
+                "command": "powershell.exe -ExecutionPolicy Bypass -File tools/Build-MQL5.ps1"
+            },
+            {
+                "cwd": "${workspaceFolder}",
+                "name": "⚙️ Setup Environment",
+                "color": "blue",
+                "singleInstance": true,
+                "command": "powershell.exe -ExecutionPolicy Bypass -File setup/Setup-Environment.ps1 -CreateSymlinks -SetupVSCode"
+            }
+        ]
+    }
+}
