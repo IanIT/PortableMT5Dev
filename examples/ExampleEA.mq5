@@ -2,7 +2,7 @@
 //| Example Expert Advisor for Portable MT5 Development Environment |
 //+------------------------------------------------------------------+
 #property copyright "Portable MT5 Development Environment"
-#property link      "https://github.com/your-username/portable-mt5-dev"
+#property link      "https://github.com/IanLGit/PortableMT5Dev"
 #property version   "1.00"
 #property strict
 
@@ -27,21 +27,21 @@ int OnInit()
 {
     // Initialize trade object
     trade.SetExpertMagicNumber(12345);
-    
+
     // Initialize symbol info
     if (!symbol.Name(Symbol()))
     {
         Print("Failed to initialize symbol info");
         return INIT_FAILED;
     }
-    
+
     // Check account permissions
     if (!account.TradeAllowed())
     {
         Print("Trading is not allowed for this account");
         return INIT_FAILED;
     }
-    
+
     Print("Example EA initialized successfully");
     return INIT_SUCCEEDED;
 }
@@ -62,27 +62,27 @@ void OnTick()
     // Check if it's a new bar
     static datetime lastBarTime = 0;
     datetime currentBarTime = iTime(Symbol(), TimeFrame, 0);
-    
+
     if (currentBarTime == lastBarTime)
         return;
-    
+
     lastBarTime = currentBarTime;
-    
+
     // Simple example strategy: Buy on bullish candle, sell on bearish candle
     double open = iOpen(Symbol(), TimeFrame, 1);
     double close = iClose(Symbol(), TimeFrame, 1);
-    
+
     // Check if we have any open positions
     if (PositionsTotal() > 0)
         return;
-    
+
     // Buy signal
     if (close > open)
     {
         double ask = symbol.Ask();
         double tp = ask + TakeProfit * symbol.Point();
         double sl = ask - StopLoss * symbol.Point();
-        
+
         if (trade.Buy(LotSize, Symbol(), ask, sl, tp, "Example EA Buy"))
         {
             Print("Buy order placed successfully");
@@ -98,7 +98,7 @@ void OnTick()
         double bid = symbol.Bid();
         double tp = bid - TakeProfit * symbol.Point();
         double sl = bid + StopLoss * symbol.Point();
-        
+
         if (trade.Sell(LotSize, Symbol(), bid, sl, tp, "Example EA Sell"))
         {
             Print("Sell order placed successfully");
@@ -145,13 +145,13 @@ bool IsNewBar()
 {
     static datetime lastBarTime = 0;
     datetime currentBarTime = iTime(Symbol(), TimeFrame, 0);
-    
+
     if (currentBarTime != lastBarTime)
     {
         lastBarTime = currentBarTime;
         return true;
     }
-    
+
     return false;
 }
 

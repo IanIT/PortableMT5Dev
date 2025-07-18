@@ -76,7 +76,7 @@ Before contributing, ensure you have:
    ```powershell
    # Set execution policy
    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-   
+
    # Run setup in test mode
    .\setup\Setup-Environment.ps1 -DryRun
    ```
@@ -85,7 +85,7 @@ Before contributing, ensure you have:
    ```powershell
    # Create development branch
    git checkout -b feature/your-feature-name
-   
+
    # Run tests to verify setup
    .\tests\Run-Tests.ps1 -TestType "all"
    ```
@@ -115,7 +115,7 @@ Before contributing, ensure you have:
    ```powershell
    # Run all tests
    .\tests\Run-Tests.ps1 -TestType "all"
-   
+
    # Test specific functionality
    .\tests\Run-Tests.ps1 -TestType "compilation" -Verbose
    ```
@@ -135,29 +135,29 @@ Before contributing, ensure you have:
 1. **Follow PowerShell Best Practices**
    ```powershell
    #requires -version 5.1
-   
+
    <#
    .SYNOPSIS
        Brief description of script functionality
-   
+
    .DESCRIPTION
        Detailed description
-   
+
    .PARAMETER ParameterName
        Description of parameter
-   
+
    .EXAMPLE
        .\Script.ps1 -Parameter "value"
    #>
-   
+
    param(
        [Parameter(Mandatory=$true)]
        [string]$RequiredParameter,
-       
+
        [Parameter(Mandatory=$false)]
        [switch]$OptionalSwitch = $false
    )
-   
+
    $ErrorActionPreference = 'Stop'
    ```
 
@@ -186,10 +186,10 @@ Before contributing, ensure you have:
    //| Script/EA/Indicator Name                                         |
    //+------------------------------------------------------------------+
    #property copyright "Your Name"
-   #property link      "https://github.com/your-username/portable-mt5-dev"
+   #property link      "https://github.com/IanLGit/PortableMT5Dev"
    #property version   "1.00"
    #property strict
-   
+
    // Use clear naming conventions
    class CMyClass
    {
@@ -242,7 +242,7 @@ Before contributing, ensure you have:
    function Test-NewFeature {
        # Test implementation
        $result = Invoke-NewFeature -Parameter "test"
-       
+
        if ($result -eq "expected") {
            Write-Host "✅ Test passed"
            return $true
@@ -402,14 +402,14 @@ Brief description of changes
    ```powershell
    function Test-MyFunction {
        param([string]$TestName)
-       
+
        # Arrange
        $input = "test data"
        $expected = "expected result"
-       
+
        # Act
        $actual = Invoke-MyFunction -Input $input
-       
+
        # Assert
        if ($actual -eq $expected) {
            Write-TestResult $TestName "PASS"

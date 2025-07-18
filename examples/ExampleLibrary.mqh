@@ -2,7 +2,7 @@
 //| Example Library for Portable MT5 Development Environment        |
 //+------------------------------------------------------------------+
 #property copyright "Portable MT5 Development Environment"
-#property link      "https://github.com/your-username/portable-mt5-dev"
+#property link      "https://github.com/IanLGit/PortableMT5Dev"
 #property version   "1.00"
 #property strict
 
@@ -19,36 +19,36 @@ private:
     CTrade            m_trade;
     CSymbolInfo       m_symbol;
     CAccountInfo      m_account;
-    
+
 public:
     //--- Constructor
                      CExampleLibrary(void);
     //--- Destructor
                     ~CExampleLibrary(void);
-    
+
     //--- Initialization
     bool              Init(const string symbol, const ulong magic = 0);
-    
+
     //--- Trading functions
     bool              OpenBuy(const double lots, const double sl = 0, const double tp = 0, const string comment = "");
     bool              OpenSell(const double lots, const double sl = 0, const double tp = 0, const string comment = "");
     bool              ClosePosition(const ulong ticket);
     bool              CloseAllPositions(void);
-    
+
     //--- Position management
     int               GetPositionsCount(void);
     double            GetTotalProfit(void);
     ulong             GetPositionTicket(const int index);
-    
+
     //--- Market analysis
     bool              IsBullishCandle(const int index = 1);
     bool              IsBearishCandle(const int index = 1);
     double            GetCandleSize(const int index = 1);
-    
+
     //--- Risk management
     double            CalculateLotSize(const double riskPercent, const double stopLossPoints);
     bool              IsSpreadAcceptable(const double maxSpread);
-    
+
     //--- Utility functions
     bool              IsNewBar(void);
     string            GetTimeString(void);
@@ -79,21 +79,21 @@ bool CExampleLibrary::Init(const string symbol, const ulong magic = 0)
     // Set magic number
     if (magic > 0)
         m_trade.SetExpertMagicNumber(magic);
-    
+
     // Initialize symbol
     if (!m_symbol.Name(symbol))
     {
         Print("Failed to initialize symbol: ", symbol);
         return false;
     }
-    
+
     // Check if trading is allowed
     if (!m_account.TradeAllowed())
     {
         Print("Trading is not allowed for this account");
         return false;
     }
-    
+
     Print("Example Library initialized for symbol: ", symbol);
     return true;
 }
@@ -105,7 +105,7 @@ bool CExampleLibrary::OpenBuy(const double lots, const double sl = 0, const doub
 {
     double price = m_symbol.Ask();
     bool result = m_trade.Buy(lots, m_symbol.Name(), price, sl, tp, comment);
-    
+
     if (result)
     {
         Print("Buy order opened: Lots=", lots, " Price=", price, " SL=", sl, " TP=", tp);
@@ -114,7 +114,7 @@ bool CExampleLibrary::OpenBuy(const double lots, const double sl = 0, const doub
     {
         Print("Failed to open buy order: ", m_trade.ResultRetcode(), " - ", m_trade.ResultRetcodeDescription());
     }
-    
+
     return result;
 }
 
@@ -125,7 +125,7 @@ bool CExampleLibrary::OpenSell(const double lots, const double sl = 0, const dou
 {
     double price = m_symbol.Bid();
     bool result = m_trade.Sell(lots, m_symbol.Name(), price, sl, tp, comment);
-    
+
     if (result)
     {
         Print("Sell order opened: Lots=", lots, " Price=", price, " SL=", sl, " TP=", tp);
@@ -134,7 +134,7 @@ bool CExampleLibrary::OpenSell(const double lots, const double sl = 0, const dou
     {
         Print("Failed to open sell order: ", m_trade.ResultRetcode(), " - ", m_trade.ResultRetcodeDescription());
     }
-    
+
     return result;
 }
 
@@ -148,9 +148,9 @@ bool CExampleLibrary::ClosePosition(const ulong ticket)
         Print("Position not found: ", ticket);
         return false;
     }
-    
+
     bool result = m_trade.PositionClose(ticket);
-    
+
     if (result)
     {
         Print("Position closed: ", ticket);
@@ -159,7 +159,7 @@ bool CExampleLibrary::ClosePosition(const ulong ticket)
     {
         Print("Failed to close position: ", ticket, " Error: ", m_trade.ResultRetcode());
     }
-    
+
     return result;
 }
 
@@ -170,7 +170,7 @@ bool CExampleLibrary::CloseAllPositions(void)
 {
     int total = PositionsTotal();
     bool allClosed = true;
-    
+
     for (int i = total - 1; i >= 0; i--)
     {
         ulong ticket = PositionGetTicket(i);
@@ -180,7 +180,7 @@ bool CExampleLibrary::CloseAllPositions(void)
                 allClosed = false;
         }
     }
-    
+
     return allClosed;
 }
 
@@ -199,7 +199,7 @@ double CExampleLibrary::GetTotalProfit(void)
 {
     double totalProfit = 0.0;
     int total = PositionsTotal();
-    
+
     for (int i = 0; i < total; i++)
     {
         if (PositionSelectByIndex(i))
@@ -207,7 +207,7 @@ double CExampleLibrary::GetTotalProfit(void)
             totalProfit += PositionGetDouble(POSITION_PROFIT);
         }
     }
-    
+
     return totalProfit;
 }
 
@@ -218,7 +218,7 @@ bool CExampleLibrary::IsBullishCandle(const int index = 1)
 {
     double open = iOpen(m_symbol.Name(), PERIOD_CURRENT, index);
     double close = iClose(m_symbol.Name(), PERIOD_CURRENT, index);
-    
+
     return close > open;
 }
 
@@ -229,7 +229,7 @@ bool CExampleLibrary::IsBearishCandle(const int index = 1)
 {
     double open = iOpen(m_symbol.Name(), PERIOD_CURRENT, index);
     double close = iClose(m_symbol.Name(), PERIOD_CURRENT, index);
-    
+
     return close < open;
 }
 
@@ -240,18 +240,18 @@ double CExampleLibrary::CalculateLotSize(const double riskPercent, const double 
 {
     if (stopLossPoints <= 0 || riskPercent <= 0)
         return m_symbol.LotsMin();
-    
+
     double riskAmount = m_account.Balance() * riskPercent / 100.0;
     double tickValue = m_symbol.TickValue();
     double lotSize = riskAmount / (stopLossPoints * tickValue);
-    
+
     // Normalize lot size
     double minLot = m_symbol.LotsMin();
     double maxLot = m_symbol.LotsMax();
     double stepLot = m_symbol.LotsStep();
-    
+
     lotSize = MathMax(minLot, MathMin(maxLot, MathRound(lotSize / stepLot) * stepLot));
-    
+
     return lotSize;
 }
 
@@ -271,13 +271,13 @@ bool CExampleLibrary::IsNewBar(void)
 {
     static datetime lastBarTime = 0;
     datetime currentBarTime = iTime(m_symbol.Name(), PERIOD_CURRENT, 0);
-    
+
     if (currentBarTime != lastBarTime)
     {
         lastBarTime = currentBarTime;
         return true;
     }
-    
+
     return false;
 }
 
