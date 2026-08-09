@@ -1,0 +1,51 @@
+name: Repository governance
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, synchronize, labeled]
+  pull_request_review:
+    types: [submitted]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  request-initial-copilot-review:
+    if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'ready_for_review') && !github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Request one initial Copilot review
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          PULL_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh api --method POST "/repos/$REPOSITORY/pulls/$PULL_NUMBER/requested_reviewers" \
+            -f 'reviewers[]=copilot-pull-request-reviewer[bot]'
+
+  verify-final-material-review:
+    if: github.event_name != 'pull_request' || github.event.action != 'opened'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify Copilot reviewed current head
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        shell: bash
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
+            echo "workflow_dispatch is diagnostic only"
+            exit 0
+          fi
+          number=$(jq -r '.pull_request.number // (.review.pull_request_url | split("/")[-1])' "$GITHUB_EVENT_PATH")
+          head=$(gh api "/repos/$REPOSITORY/pulls/$number" --jq .head.sha)
+          reviewed=$(gh api "/repos/$REPOSITORY/pulls/$number/reviews?per_page=100" \
+            --jq '[.[] | select(.user.login == "copilot-pull-request-reviewer[bot]" and .commit_id == "'"$head"'")] | length')
+          test "$reviewed" -gt 0 || { echo "Copilot has not reviewed current head $head"; exit 1; }
+          echo "Copilot review verified for current head $head"
+
