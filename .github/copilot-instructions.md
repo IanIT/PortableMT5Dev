@@ -2,6 +2,17 @@
 
 Governance version: `1.0.0`. Read `README.md` and the relevant setup, tools and testing documentation before review. This repository is a Windows PowerShell toolkit for portable MetaTrader 5, VS Code integration, compilation and file-level symbolic links.
 
+<!-- ianit-governance:start -->
+## Mandatory IanIT governance 1.0.0
+
+- Do not merge until relevant CI has passed and Copilot has reviewed the final material revision.
+- Fix every actionable finding or explicitly dismiss it with a recorded technical reason.
+- Request one opening Copilot review; keep automatic new-push reviews disabled and request one intentional final re-review after material corrections.
+- Use deeper review for trading, authentication, authorisation, credentials, deployment, bridge and security-sensitive changes.
+- Report unavailable plan features and unsupported APIs explicitly; never pretend they were applied.
+- Keep UAT and Production separate. Production requires separate explicit authorisation.
+<!-- ianit-governance:end -->
+
 ## Pull-request review policy
 
 - Treat Copilot review as advisory evidence. Required CI and the requested review must finish before merge.
@@ -17,4 +28,3 @@ Governance version: `1.0.0`. Read `README.md` and the relevant setup, tools and 
 - Do not bundle broker credentials, account data, proprietary strategies, terminals or mutable machine-specific paths.
 - Treat undocumented MT5 flags as compatibility risk and require bounded failure diagnostics and manual fallback.
 - This toolkit may compile trading code but must not enable live trading or deploy to a live account without separate explicit authorisation.
-
