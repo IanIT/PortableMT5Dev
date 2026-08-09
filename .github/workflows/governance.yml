@@ -9,12 +9,15 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
+  pull-requests: read
 
 jobs:
   request-initial-copilot-review:
-    if: github.event_name == 'pull_request' && github.event.action == 'opened' && !github.event.pull_request.draft
+    if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'ready_for_review') && !github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Request one initial Copilot review
         env:
@@ -33,7 +36,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
-          PULL_NUMBER: ${{ github.event.pull_request.number || github.event.review.pull_request_url && github.event.review.pull_request_url }}
         shell: bash
         run: |
           if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
@@ -45,7 +47,7 @@ jobs:
             number=$(jq -r '.review.pull_request_url | split("/")[-1]' "$GITHUB_EVENT_PATH")
           fi
           head=$(gh api "/repos/$REPOSITORY/pulls/$number" --jq .head.sha)
-          reviewed=$(gh api --paginate "/repos/$REPOSITORY/pulls/$number/reviews" \
+          reviewed=$(gh api "/repos/$REPOSITORY/pulls/$number/reviews?per_page=100" \
             --jq '[.[] | select(.user.login == "copilot-pull-request-reviewer[bot]" and .commit_id == "'"$head"'")] | length')
           test "$reviewed" -gt 0 || { echo "Copilot has not reviewed current head $head"; exit 1; }
           echo "Copilot review verified for current head $head"
