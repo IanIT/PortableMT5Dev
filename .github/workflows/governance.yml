@@ -42,10 +42,7 @@ jobs:
             echo "workflow_dispatch is diagnostic only"
             exit 0
           fi
-          number="${{ github.event.pull_request.number }}"
-          if [[ -z "$number" ]]; then
-            number=$(jq -r '.review.pull_request_url | split("/")[-1]' "$GITHUB_EVENT_PATH")
-          fi
+          number=$(jq -r '.pull_request.number // (.review.pull_request_url | split("/")[-1])' "$GITHUB_EVENT_PATH")
           head=$(gh api "/repos/$REPOSITORY/pulls/$number" --jq .head.sha)
           reviewed=$(gh api "/repos/$REPOSITORY/pulls/$number/reviews?per_page=100" \
             --jq '[.[] | select(.user.login == "copilot-pull-request-reviewer[bot]" and .commit_id == "'"$head"'")] | length')
