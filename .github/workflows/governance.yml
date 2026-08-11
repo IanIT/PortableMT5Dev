@@ -28,12 +28,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
           PULL_NUMBER: ${{ github.event.pull_request.number }}
+          PULL_AUTHOR: ${{ github.event.pull_request.user.login }}
         shell: bash
         run: |
           set -euo pipefail
           required=true
-          author=""
-          if ! author=$(gh api "/repos/$REPOSITORY/pulls/$PULL_NUMBER" --jq .user.login); then
+          author="$PULL_AUTHOR"
+          if [[ -z "$author" ]]; then
             echo "Unable to classify PR author; Copilot review remains required"
           fi
           if [[ "$author" == "dependabot[bot]" ]]; then
@@ -84,8 +85,8 @@ jobs:
             exit 0
           fi
           number=$(jq -r '.pull_request.number // (.review.pull_request_url | split("/")[-1])' "$GITHUB_EVENT_PATH")
-          author=""
-          if ! author=$(gh api "/repos/$REPOSITORY/pulls/$number" --jq .user.login); then
+          author=$(jq -r '.pull_request.user.login // empty' "$GITHUB_EVENT_PATH")
+          if [[ -z "$author" ]]; then
             echo "Unable to classify PR author; exact-head Copilot review remains required"
           fi
           if [[ "$author" == "dependabot[bot]" ]]; then
@@ -106,7 +107,8 @@ jobs:
               echo "No changed files returned; exact-head Copilot review remains required"
             fi
           fi
-          head=$(gh api "/repos/$REPOSITORY/pulls/$number" --jq .head.sha)
+          head=$(jq -r '.pull_request.head.sha // empty' "$GITHUB_EVENT_PATH")
+          test -n "$head" || { echo "Unable to identify current PR head"; exit 1; }
           if ! reviewed=$(gh api --paginate "/repos/$REPOSITORY/pulls/$number/reviews?per_page=100" \
             --jq '.[] | select(.user.login == "copilot-pull-request-reviewer[bot]" and .commit_id == "'"$head"'") | .id' | awk 'END { print NR }'); then
             echo "Unable to query Copilot reviews for current head $head"
