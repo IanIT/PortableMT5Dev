@@ -11,6 +11,10 @@ permissions:
   contents: read
   pull-requests: read
 
+concurrency:
+  group: repository-governance-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   request-initial-copilot-review:
     if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'ready_for_review') && !github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository
@@ -19,7 +23,41 @@ jobs:
       contents: read
       pull-requests: write
     steps:
+      - name: Classify review requirement
+        id: review
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          PULL_NUMBER: ${{ github.event.pull_request.number }}
+          DEPENDENCY_FILE_PATTERN: '(^|/)(package(-lock)?\.json|npm-shrinkwrap\.json|yarn\.lock|pnpm-lock\.yaml|go\.(mod|sum)|packages\.lock\.json|[^/]+\.(csproj|fsproj)|pom\.xml|requirements[^/]*\.txt|poetry\.lock|pyproject\.toml|Pipfile(\.lock)?|Cargo\.(toml|lock)|Gemfile(\.lock)?)$'
+        shell: bash
+        run: |
+          required=true
+          author=""
+          if ! author=$(gh api "/repos/$REPOSITORY/pulls/$PULL_NUMBER" --jq .user.login); then
+            echo "Unable to classify PR author; Copilot review remains required"
+          fi
+          if [[ "$author" == "dependabot[bot]" ]]; then
+            files=""
+            if ! files=$(gh api --paginate "/repos/$REPOSITORY/pulls/$PULL_NUMBER/files" --jq '.[].filename'); then
+              echo "Unable to classify changed files; Copilot review remains required"
+            fi
+            if [[ -n "$files" ]]; then
+              if ! non_dependency=$(DEPENDENCY_FILES="$files" python3 -c 'import os, re; pattern = re.compile(os.environ["DEPENDENCY_FILE_PATTERN"]); print("\n".join(path for path in os.environ["DEPENDENCY_FILES"].splitlines() if not pattern.search(path)))'); then
+                echo "Dependency file classification failed"
+                exit 1
+              fi
+              if [[ -z "$non_dependency" ]]; then
+                required=false
+                echo "Dependency-manifest-only Dependabot change: substantive CI replaces Copilot review"
+              fi
+            else
+              echo "No changed files returned; Copilot review remains required"
+            fi
+          fi
+          echo "required=$required" >> "$GITHUB_OUTPUT"
       - name: Request one initial Copilot review
+        if: steps.review.outputs.required == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
@@ -36,6 +74,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
+          DEPENDENCY_FILE_PATTERN: '(^|/)(package(-lock)?\.json|npm-shrinkwrap\.json|yarn\.lock|pnpm-lock\.yaml|go\.(mod|sum)|packages\.lock\.json|[^/]+\.(csproj|fsproj)|pom\.xml|requirements[^/]*\.txt|poetry\.lock|pyproject\.toml|Pipfile(\.lock)?|Cargo\.(toml|lock)|Gemfile(\.lock)?)$'
         shell: bash
         run: |
           if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
@@ -43,9 +82,31 @@ jobs:
             exit 0
           fi
           number=$(jq -r '.pull_request.number // (.review.pull_request_url | split("/")[-1])' "$GITHUB_EVENT_PATH")
+          author=""
+          if ! author=$(gh api "/repos/$REPOSITORY/pulls/$number" --jq .user.login); then
+            echo "Unable to classify PR author; exact-head Copilot review remains required"
+          fi
+          if [[ "$author" == "dependabot[bot]" ]]; then
+            files=""
+            if ! files=$(gh api --paginate "/repos/$REPOSITORY/pulls/$number/files" --jq '.[].filename'); then
+              echo "Unable to classify changed files; exact-head Copilot review remains required"
+            fi
+            if [[ -n "$files" ]]; then
+              if ! non_dependency=$(DEPENDENCY_FILES="$files" python3 -c 'import os, re; pattern = re.compile(os.environ["DEPENDENCY_FILE_PATTERN"]); print("\n".join(path for path in os.environ["DEPENDENCY_FILES"].splitlines() if not pattern.search(path)))'); then
+                echo "Dependency file classification failed"
+                exit 1
+              fi
+              if [[ -z "$non_dependency" ]]; then
+                echo "Dependency-manifest-only Dependabot change: substantive CI is the review evidence"
+                exit 0
+              fi
+            else
+              echo "No changed files returned; exact-head Copilot review remains required"
+            fi
+          fi
           head=$(gh api "/repos/$REPOSITORY/pulls/$number" --jq .head.sha)
-          reviewed=$(gh api "/repos/$REPOSITORY/pulls/$number/reviews?per_page=100" \
-            --jq '[.[] | select(.user.login == "copilot-pull-request-reviewer[bot]" and .commit_id == "'"$head"'")] | length')
+          reviewed=$(gh api --paginate "/repos/$REPOSITORY/pulls/$number/reviews?per_page=100" \
+            --jq '.[] | select(.user.login == "copilot-pull-request-reviewer[bot]" and .commit_id == "'"$head"'") | .id' | awk 'END { print NR }')
           test "$reviewed" -gt 0 || { echo "Copilot has not reviewed current head $head"; exit 1; }
           echo "Copilot review verified for current head $head"
 
