@@ -12,7 +12,7 @@ Describe the behaviour changed and the owning project.
 
 - [ ] Relevant local tests passed
 - [ ] CI passed for the current head SHA
-- [ ] Initial Copilot review completed where applicable
+- [ ] Optional Copilot review completed only when current plan access permits
 - [ ] Final material revision intentionally re-reviewed
 - [ ] Every actionable finding fixed or technically dismissed
 - [ ] UAT verified when deployment is in scope
