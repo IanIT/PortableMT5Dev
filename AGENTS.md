@@ -1,9 +1,9 @@
 # IanIT repository working agreements
 
-Governance version: `1.2.3`. Profile: `active`.
+Governance version: `1.2.4`. Profile: `active`.
 
 <!-- ianit-governance:start -->
-## Mandatory IanIT repository workflow 1.2.3
+## Mandatory IanIT repository workflow 1.2.4
 
 - Establish the real checkout, git state, remote default branch, open pull
   requests, substantive CI, and unresolved review threads before changing code.
@@ -14,8 +14,9 @@ Governance version: `1.2.3`. Profile: `active`.
 - Use compact GitHub Actions status checks. Do not repeatedly stream the same
   run, rerun unchanged checks, or redeploy merely to produce cleaner output.
 - Inspect normal, outdated, and suppressed review findings together. Fix or
-  technically dismiss each actionable finding, then obtain exact-head review
-  and CI evidence before merge.
+  technically dismiss each actionable finding, then obtain exact-head
+  independent review and CI evidence before merge. Copilot PR review is
+  optional and must not be treated as available on GitHub Copilot Free.
 - Keep pull-request validation, default-branch artifact creation, and deployment
   distinct. Preserve project-specific security and exact-artifact release gates.
 - Keep UAT and Production separate. Production, credentials, live data, email
