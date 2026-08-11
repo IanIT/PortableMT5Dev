@@ -1,9 +1,9 @@
 # IanIT repository working agreements
 
-Governance version: `1.2.0`. Profile: `active`.
+Governance version: `1.2.3`. Profile: `active`.
 
 <!-- ianit-governance:start -->
-## Mandatory IanIT repository workflow 1.2.2
+## Mandatory IanIT repository workflow 1.2.3
 
 - Establish the real checkout, git state, remote default branch, open pull
   requests, substantive CI, and unresolved review threads before changing code.
