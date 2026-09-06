@@ -1,9 +1,9 @@
 # IanIT repository working agreements
 
-Governance version: `1.2.4`. Profile: `active`.
+Governance version: `1.2.5`. Profile: `active`.
 
 <!-- ianit-governance:start -->
-## Mandatory IanIT repository workflow 1.2.4
+## Mandatory IanIT repository workflow 1.2.5
 
 - Establish the real checkout, git state, remote default branch, open pull
   requests, substantive CI, and unresolved review threads before changing code.
@@ -13,6 +13,11 @@ Governance version: `1.2.4`. Profile: `active`.
   relevant suite once on the final local head before publication.
 - Use compact GitHub Actions status checks. Do not repeatedly stream the same
   run, rerun unchanged checks, or redeploy merely to produce cleaner output.
+- Minimise Actions storage: upload only artefacts needed after the producing job;
+  retain routine CI evidence, failed-build diagnostics and UAT packages for 7
+  days, small deployment receipts and recovery manifests for 14 days, and
+  deliberate benchmark or release evidence for at most 30 days. Preserve
+  released deliverables outside recurring Actions artefacts.
 - Inspect normal, outdated, and suppressed review findings together. Fix or
   technically dismiss each actionable finding, then obtain exact-head
   independent review and CI evidence before merge. Copilot PR review is
