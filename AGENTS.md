@@ -1,9 +1,9 @@
 # IanIT repository working agreements
 
-Governance version: `1.2.5`. Profile: `active`.
+Governance version: `1.2.6`. Profile: `active`.
 
 <!-- ianit-governance:start -->
-## Mandatory IanIT repository workflow 1.2.5
+## Mandatory IanIT repository workflow 1.2.6
 
 - Establish the real checkout, git state, remote default branch, open pull
   requests, substantive CI, and unresolved review threads before changing code.
@@ -29,6 +29,21 @@ Governance version: `1.2.5`. Profile: `active`.
 - If Actions minutes, plan features, permissions, or external services are
   unavailable, continue safe local validation where possible and report the
   hosted gate honestly; never claim an unrun check or deployment succeeded.
+- At the start and completion of repository work, check that repository's GitHub
+  notifications alongside open issues/PRs, security alerts, review findings and
+  relevant CI/deployment results. Use repository-scoped, paginated API queries
+  and compact summaries; avoid repeated full-account scans.
+- Resolve actionable items within the authorised scope and verify the result.
+  Mark only individually verified resolved or superseded notifications Done;
+  clearing a notification is not resolving an issue. A newer green run counts
+  only when it covers the same affected branch/workflow or an explicitly
+  documented replacement with matching release evidence.
+- Keep unresolved or unverified items visible and record the blocker, owner and
+  next action in the handoff or existing tracker. Do not silently dismiss
+  security findings, close unrelated work, rerun recovery, or redeploy a live
+  app just to make the inbox or checks green. Existing authority boundaries apply.
+- Before handoff, refresh scoped notifications and report what was cleared and
+  what remains. If access is unavailable, state that the check was not completed.
 <!-- ianit-governance:end -->
 
 Repository-specific instructions may add stronger commands, architecture rules,
