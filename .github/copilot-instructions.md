@@ -3,11 +3,11 @@
 Governance version: `1.0.0`. Read `README.md` and the relevant setup, tools and testing documentation before review. This repository is a Windows PowerShell toolkit for portable MetaTrader 5, VS Code integration, compilation and file-level symbolic links.
 
 <!-- ianit-governance:start -->
-## Mandatory IanIT governance 1.0.0
+## Mandatory IanIT governance 1.2.8
 
-- Do not merge until relevant CI has passed and Copilot has reviewed the final material revision.
+- Material changes require one independent Codex or human final-material review and relevant exact-head CI before merge. Copilot Free review is not a required gate.
 - Fix every actionable finding or explicitly dismiss it with a recorded technical reason.
-- Request one opening Copilot review; keep automatic new-push reviews disabled and request one intentional final re-review after material corrections.
+- Use one final-material review, with any correction follow-up limited to changed material. Do not request opening or every-push Copilot reviews.
 - Use deeper review for trading, authentication, authorisation, credentials, deployment, bridge and security-sensitive changes.
 - Report unavailable plan features and unsupported APIs explicitly; never pretend they were applied.
 - Keep UAT and Production separate. Production requires separate explicit authorisation.
