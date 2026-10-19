@@ -30,6 +30,17 @@ Governance version: `1.2.8`. Profile: `active`.
   Use the configured standard Codex model, effort and speed tier; never escalate
   to Astra or an expensive model, or bypass a model denial. An unavailable model
   must fail clearly without substitution. Reviewers must not spawn reviewers.
+  Where an applicable rule requires a model different from the author, verify
+  the actual author ID and supported model IDs, efforts and capabilities using
+  the executing runtime or approved configuration. Choose the lowest-cost valid,
+  supported non-Astra model capable of that review at the minimum appropriate
+  supported reasoning effort, using current comparable cost evidence. If a cheaper
+  option lacks capability, record why and select the next least expensive capable
+  option within approved cost bounds. Do not guess IDs, treat display order as
+  price, substitute API pricing for Codex usage, or infer support from a catalogue
+  alone. Missing identity, capability, support or cost evidence blocks selection;
+  report the gap without paid probes, denial bypass or unapproved costly fallback.
+  Record the reviewer model/effort actually used and the selection evidence.
   Allow at most one targeted correction/re-review follow-up with the same reviewer
   only when material corrections warrant it; do not duplicate full test suites.
   At the bound, report unresolved findings and request Ian's direction; do not
